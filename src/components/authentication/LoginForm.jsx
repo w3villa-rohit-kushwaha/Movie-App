@@ -1,8 +1,10 @@
 // components/authentication/LoginForm.js
 import React, { useState } from 'react';
 import { login } from '../services/AuthService';
+import { useAuth } from '../../AuthContext';
 
 const LoginForm = () => {
+  const { login: authenticate } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,6 +18,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const result = await login(formData);
+      authenticate(); 
       console.log('Login Successful:', result);
       // Handle successful login (redirect, update state, etc.)
     } catch (error) {
